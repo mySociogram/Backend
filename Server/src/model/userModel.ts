@@ -1,27 +1,14 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../config/database'
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../config/database";
 
 export interface UserAttributes {
   id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  otp: any | null;
-  otp_expiry: Date | null;
-  verify: boolean | null;
+  walletId: string;
 }
 
-class User extends Model<UserAttributes, UserAttributes> implements UserAttributes {
-  otp: any;
-  otp_expiry: any;
+class User extends Model<UserAttributes> {
   id!: string;
-  firstName!: string;
-  lastName!: string;
-  email!: string;
-  gender!: string;
-  password!: string;
-  verify!: boolean | null;
+  walletId!: string;
 }
 
 User.init(
@@ -31,38 +18,14 @@ User.init(
       primaryKey: true,
       allowNull: false,
     },
-    firstName: {
+    walletId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    otp: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    otp_expiry: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    verify: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-    }
   },
   {
     sequelize,
-    modelName: 'User',
+    modelName: "User",
     timestamps: true,
   }
 );
