@@ -6,7 +6,7 @@ import logger from 'morgan';
 
 import postRouter from './routes/post' ;
 import usersRouter from './routes/users' ;
-import groupRouter from './routes/group' ;
+import communityRouter from './routes/Community' ;
 import commentRouter from './routes/comment' ;
 import { dbConnect, sequelize } from './config/database';
 
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', postRouter);
 app.use('/users', usersRouter);
-app.use('/', groupRouter);
+app.use('/', communityRouter);
 app.use('/',commentRouter);
 
 
