@@ -6,7 +6,7 @@ import logger from 'morgan';
 
 import postRouter from './routes/post' ;
 import usersRouter from './routes/users' ;
-import communityRouter from './routes/Community' ;
+import communityRouter from './routes/community' ;
 import commentRouter from './routes/comment' ;
 import { dbConnect, sequelize } from './config/database';
 
