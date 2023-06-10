@@ -19,7 +19,6 @@ export const createCommunity = async (req: Request, res: Response) => {
     const {id} = req.params;
     const userId = id
     console.log(id, "id")
-  //  const walletId = id
     if (!userId) {
       return res
         .status(401)
