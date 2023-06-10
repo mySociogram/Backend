@@ -1,9 +1,10 @@
-import express,{Response, Request } from'express';
+import express from'express';
+import { getAllUsers, userSignUp } from '../controller/userController';
+
 const router = express.Router();
 
 
-router.get('/', function(req:Request, res:Response) {
-  res.send('respond with a resource');
-});
+router.post('/',userSignUp )
+router.get('/allUsers',getAllUsers)
 
 export default router;

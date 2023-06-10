@@ -44,7 +44,9 @@ class Community extends Model<CommunityAttributes> {
       communityName: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
+      
       about: {
         type: DataTypes.STRING,
         allowNull: false,
