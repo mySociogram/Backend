@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', postRouter);
 app.use('/users', usersRouter);
-app.use('/', communityRouter);
+app.use('/community', communityRouter);
 app.use('/',commentRouter);
 
 

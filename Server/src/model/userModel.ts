@@ -14,7 +14,7 @@ class User extends Model<UserAttributes> {
 User.init(
   {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       primaryKey: true,
       allowNull: false,
     },

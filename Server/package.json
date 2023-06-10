@@ -26,6 +26,7 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/http-errors": "^2.0.1",
     "@types/morgan": "^1.9.4",
-    "@types/sequelize": "^4.28.15"
+    "@types/sequelize": "^4.28.15",
+    "@types/uuid": "^9.0.1"
   }
 }
