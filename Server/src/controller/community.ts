@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import Community, { CommunityAttributes } from "../model/commuintyModel";
 import User from "../model/userModel";
+import { Op } from 'sequelize'
+
 
 export const createCommunity = async (req: Request, res: Response) => {
   const { communityName, about } = req.body;
@@ -16,35 +18,44 @@ export const createCommunity = async (req: Request, res: Response) => {
   }
 
   try {
-    const {id} = req.params;
-    const userId = id
-    console.log(id, "id")
+    const { id } = req.params;
+    const userId = id;
+    console.log(id, "id");
     if (!userId) {
       return res
         .status(401)
         .json({ error: "You are not allowed to create a community" });
     }
 
-    const user = await User.findOne({ where: { id: userId as string}  });
+    const user = await User.findOne({ where: { id: userId as string } });
     console.log(user, "user");
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    //const userId = user.id;
-  console.log(userId, "here");
-
+   
+    const existingCommunity = await Community.findOne({
+      where: {
+        communityName: {
+          [Op.iLike]: communityName
+        }
+      }
+    });
+  
+    if (existingCommunity) {
+      return res
+        .status(400)
+        .json({ error: "A community with this name already exists" });
+    }
     const communityData: CommunityAttributes = {
-       id: uuidv4(),
+      id: uuidv4(),
       communityName,
       about,
       userId,
-      walletId:user.walletId,
+      walletId: user.walletId,
       users: [],
     };
-console.log("meeeee")
     const community = await Community.create(communityData);
-    console.log(community)
 
     return res.status(201).json({
       community,
@@ -55,6 +66,7 @@ console.log("meeeee")
     return res.status(500).json({ error: "Server Error" });
   }
 };
+
 
 export const joinCommunity = async (req: Request, res: Response) => {
   try {
@@ -166,8 +178,8 @@ export const leaveCommunity = async (req: Request|any, res: Response) => {
     try {
       console.log('gettall');
       const communities = await Community.findAll();
-      console.log(communities, "here")
-      if (!communities) {
+      console.log(communities, "here");
+      if (communities.length === 0) {
         return res.status(404).json({ message: 'No communities found' });
       }
       return res.status(200).json({
@@ -181,3 +193,4 @@ export const leaveCommunity = async (req: Request|any, res: Response) => {
       });
     }
   };
+  
