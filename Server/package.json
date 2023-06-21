@@ -7,7 +7,8 @@
     "dev": "nodemon ./bin/www",
     "compile": "tsc -w",
     "format": "npx prettier --write .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "migrate":"node-pg-migrate"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -28,6 +29,7 @@
     "@types/jsonwebtoken": "^9.0.2",
     "@types/morgan": "^1.9.4",
     "@types/sequelize": "^4.28.15",
-    "@types/uuid": "^9.0.1"
+    "@types/uuid": "^9.0.1",
+    "node-pg-migrate": "^6.2.2"
   }
 }
