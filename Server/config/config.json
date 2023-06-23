@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "sociogramspeke",
+    "password": "8OePoG7LnVQT",
+    "database": "neondb",
+    "host": "ep-bitter-art-134880.eu-central-1.aws.neon.tech",
+    "port": 5432,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true
+      }
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

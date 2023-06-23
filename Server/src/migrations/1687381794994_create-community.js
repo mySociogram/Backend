@@ -10,7 +10,7 @@ module.exports = {
         allowNull: false
       },
       userId: {
-        type: Sequelize.STRING,
+        type: Sequelize.UUID, // Change the data type to Sequelize.UUID
         allowNull: false,
         references: {
           model: 'Users',

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from "../model/userModel";
+import User from "../models/userModel";
 import { v4 as uuidv4 } from "uuid";
 
 export const userSignUp = async (req: Request, res: Response) => {

@@ -1,8 +1,8 @@
 import console from "console";
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
-import Community, { CommunityAttributes } from "../model/commuintyModel";
-import User from "../model/userModel";
+import Community, { CommunityAttributes } from "../models/commuintyModel";
+import User from "../models/userModel";
 import { Op } from 'sequelize'
 
 

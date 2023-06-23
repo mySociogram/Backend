@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
-import Post, { PostAttributes } from '../model/postModel';
+import Post, { PostAttributes } from '../models/postModel';
 
-export const createPost = async (req:Request, res:Response) => {
-    try {
-        const { title, userId, body, images }: PostAttributes = req.body;
-        const post = await Post.create({ title, userId, body, images });
-        return res.status(201).json({ message: "Post created successfully", data: post });
-    } catch (error) {
-        return res.status(500).json({ message: 'Failed to create posts', data: error });
-    }
-}
+export const createPost = async (req: Request, res: Response) => {
+  try {
+    const { title, userId, body, images, communityId, like }: PostAttributes = req.body;
+    const post = await Post.create({ title, userId, body, images, communityId,like });
+    return res.status(201).json({ message: "Post created successfully", data: post });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to create posts', data: error });
+  }
+};
+
 
 // Get all posts
 export const getAllPosts = async (req: Request, res: Response) => {

@@ -9,6 +9,7 @@ import usersRouter from './routes/users' ;
 import communityRouter from './routes/community' ;
 import commentRouter from './routes/comment' ;
 import { dbConnect, sequelize } from './config/database';
+import cors from 'cors';
 
 const app = express();
 
@@ -16,6 +17,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -32,7 +39,7 @@ app.use('/',commentRouter);
 //database conection
 const syncDatabase = async () => {
   await dbConnect();
-  await sequelize.sync({});
+  await sequelize.sync();
   console.log('Connected to Database Successfully');
 };
 
