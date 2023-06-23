@@ -5,36 +5,36 @@ import { v4 as uuidv4 } from "uuid";
 import Post from "../models/postModel";
 import User from "../models/userModel";
 
-export const createComment = async (req: JwtPayload, res: Response) => {
-    try{
-        const id = uuidv4();
+// export const createComment = async (req: JwtPayload, res: Response) => {
+//     try{
+//         const id = uuidv4();
         
-        const userId = req.user.id
-        const {postId, comment} = req.body;
+//         const userId = req.user.id
+//         const {postId, comment} = req.body;
 
-        const post = await Post.findOne({
-            where: {
-                id: postId
-            }
-        });
-        if (!post){
-            return res.status(400).json({message: "post does not exist"})
-        }
-        const newComment = await Comment.create({
-            id,
-            postId: postId,
-            userId: userId,
-            comment,
-            like: [],
-        });
-        await Post.increment(['comment'], { by: 1, where: { id: postId }});
-        res.status(201).json({comment: newComment});
+//         const post = await Post.findOne({
+//             where: {
+//                 id: postId
+//             }
+//         });
+//         if (!post){
+//             return res.status(400).json({message: "post does not exist"})
+//         }
+//         const newComment = await Comment.create({
+//             id,
+//             postId: postId,
+//             userId: userId,
+//             comment,
+//             like: [],
+//         });
+//         await Post.increment(['comment'], { by: 1, where: { id: postId }});
+//         res.status(201).json({comment: newComment});
         
-    }catch(err){
-        console.error('Error creating comment', err);
-        res.status(500).json({Error: 'Failed to create comment'});
-    }
-};
+//     }catch(err){
+//         console.error('Error creating comment', err);
+//         res.status(500).json({Error: 'Failed to create comment'});
+//     }
+// };
 
 
 export const fetchComments = async (req: Request, res: Response) => {
@@ -102,29 +102,29 @@ try {
 //     }
 //   }
 
-export const deleteComment = async (req: JwtPayload, res: Response) => {
-    const {commentId} = req.params;
-    const userId = req.user.id
-    console.log(commentId);
-    console.log(userId);
+// export const deleteComment = async (req: JwtPayload, res: Response) => {
+//     const {commentId} = req.params;
+//     const userId = req.user.id
+//     console.log(commentId);
+//     console.log(userId);
 
-    const comment:Comment | any = await Comment.findOne({
-        where: {
-            id: commentId,
-            userId: userId
-        }
-    })
-    if(comment){
-        Comment.destroy({
-            where: {
-                id: commentId,
-                userId: userId
-            }
-        })
-        await Post.decrement('comment', { by: 1, where: { id: comment.post_id }});
-        res.status(201).json({message: "comment deleted successfully"});
-    } else {
-        res.status(400).json({Error: 'cannot  delete comment'})
-    }
+//     const comment:Comment | any = await Comment.findOne({
+//         where: {
+//             id: commentId,
+//             userId: userId
+//         }
+//     })
+//     if(comment){
+//         Comment.destroy({
+//             where: {
+//                 id: commentId,
+//                 userId: userId
+//             }
+//         })
+//         await Post.decrement('comment', { by: 1, where: { id: comment.post_id }});
+//         res.status(201).json({message: "comment deleted successfully"});
+//     } else {
+//         res.status(400).json({Error: 'cannot  delete comment'})
+//     }
 
-}
+// }
