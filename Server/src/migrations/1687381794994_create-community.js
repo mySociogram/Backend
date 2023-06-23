@@ -1,27 +1,54 @@
-/* eslint-disable camelcase */
+'use strict';
 
-exports.shorthands = undefined;
-
-exports.up = pgm => {
-pgm.createTable("community", {
-    id:"id",
-    userId:{
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('communities', {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+      },
+      userId: {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'id',
+          key: 'id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-    },
-    walletId:{
+        onDelete: 'CASCADE'
+      },
+      walletId: {
         type: Sequelize.STRING,
-        allowNull: false,},
-    communityName:{},
-    about:{},
-    users:{}
-})
-};
+        allowNull: false
+      },
+      communityName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      about: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      users: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: false
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      }
+    });
+  },
 
-exports.down = pgm => {};
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('communities');
+  }
+};
