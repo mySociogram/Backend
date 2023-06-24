@@ -4,11 +4,12 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Communities', {
       id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
+        defaultValue: Sequelize.literal('uuid_generate_v4()'),
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false,
       },
+      
       userId: {
         type: Sequelize.UUID,
         allowNull: false,
@@ -19,10 +20,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      walletId: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       communityName: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -32,12 +29,8 @@ module.exports = {
         allowNull: false,
       },
       users: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
+        type: Sequelize.ARRAY(Sequelize.JSONB),
         allowNull: true,
-      },
-      token: {
-        type: Sequelize.INTEGER, // Add the token column as INTEGER
-        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,

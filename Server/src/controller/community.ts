@@ -10,52 +10,51 @@ export const createCommunity = async (req: Request, res: Response) => {
   const { communityName, about } = req.body;
 
   if (!communityName) {
-    return res.status(400).json({ error: "Community Name is required" });
+    return res.status(400).json({ error: 'Community Name is required' });
   }
 
   if (!about) {
-    return res.status(400).json({ error: "About is required" });
+    return res.status(400).json({ error: 'About is required' });
   }
 
   try {
     const { id } = req.params;
     const userId = id;
-    console.log(id, "id");
+    console.log(id, 'id');
     if (!userId) {
       return res
         .status(401)
-        .json({ error: "You are not allowed to create a community" });
+        .json({ error: 'You are not allowed to create a community' });
     }
 
     const user = await User.findOne({ where: { id: userId as string } });
-    console.log(user, "user");
+    console.log(user, 'user');
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' });
     }
 
-   
     const existingCommunity = await Community.findOne({
       where: {
         communityName: {
-          [Op.iLike]: communityName
-        }
-      }
+          [Op.iLike]: communityName,
+        },
+      },
     });
-  
+
     if (existingCommunity) {
       return res
         .status(400)
-        .json({ error: "A community with this name already exists" });
+        .json({ error: 'A community with this name already exists' });
     }
+
     const communityData: CommunityAttributes = {
       id: uuidv4(),
       communityName,
       about,
       userId,
-      walletId: user.walletId,
       users: [],
-      token:1000000000,
     };
+
     const community = await Community.create(communityData);
 
     return res.status(201).json({
@@ -64,9 +63,10 @@ export const createCommunity = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "Server Error" });
+    return res.status(500).json({ error: 'Server Error' });
   }
 };
+
 
 
 export const joinCommunity = async (req: Request, res: Response) => {
@@ -114,42 +114,49 @@ export const joinCommunity = async (req: Request, res: Response) => {
   }
 };
 
-export const leaveCommunity = async (req: Request|any, res: Response) => {
-    const {communityId} = req.params;
-    const{ userId} = req.body;
-    console.log(communityId, "communityId")
-    console.log(userId, "user")
 
-    try {
-      const community = await Community.findOne({where:{id:communityId}});
-      console.log(community);
-      
-      if (!community) {
-        return res.status(404).json({
-          message: 'Community not found',
-        });
-      }
-      console.log("logout user Id")
-      if (!community.users.includes(userId)) {
-        return res.status(404).json({
-          message: 'You are not a member of this community',
-        });
-      }
-      community.users = community.users.filter((id: string) => id !== userId);
-     
-      
-      await community.save();
-      return res.status(200).json({
-        message: 'You have left the community successfully',
-        community,
-      });
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json({
-        err: 'Server Error',
+
+export const leaveCommunity = async (req: Request, res: Response) => {
+  const { communityId } = req.params;
+  const { userId } = req.body;
+
+  console.log(communityId, 'communityId');
+  console.log(userId, 'user');
+
+  try {
+    const community = await Community.findOne({ where: { id: communityId } });
+    console.log(community);
+
+    if (!community) {
+      return res.status(404).json({
+        message: 'Community not found',
       });
     }
-  };
+
+    console.log('logout user Id');
+
+    if (!community.users.some((user) => user.userId === userId)) {
+      return res.status(404).json({
+        message: 'You are not a member of this community',
+      });
+    }
+
+    community.users = community.users.filter((user) => user.userId !== userId);
+
+    await community.save();
+
+    return res.status(200).json({
+      message: 'You have left the community successfully',
+      community,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      error: 'Server Error',
+    });
+  }
+};
+
 
 
   export const getCommunityById = async (req: Request, res: Response) => {
