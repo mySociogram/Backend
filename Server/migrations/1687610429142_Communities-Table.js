@@ -33,7 +33,7 @@ module.exports = {
       },
       users: {
         type: Sequelize.ARRAY(Sequelize.STRING),
-        allowNull: false,
+        allowNull: true,
       },
       token: {
         type: Sequelize.INTEGER, // Add the token column as INTEGER

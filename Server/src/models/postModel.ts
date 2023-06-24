@@ -33,6 +33,8 @@ class Post extends Model<PostAttributes> {
   body!: string;
   images!: Array<{ caption: string; url: string }>;
   likes!: Like[];
+  comments!:string;
+  flags!:Flag[]
 }
 
 Post.init(
@@ -49,7 +51,7 @@ Post.init(
     },
     userId: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
     },
     body: {
       type: DataTypes.TEXT,
@@ -61,21 +63,21 @@ Post.init(
     },
     communityId: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     likes: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
-      allowNull: false,
+      allowNull: true,
       defaultValue: [],
     },
     comments: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
+      allowNull: true,
       defaultValue: [],
     },
     flags: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
-      allowNull: false,
+      allowNull: true,
       defaultValue: [],
     },
   },

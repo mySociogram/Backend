@@ -1,8 +1,7 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Posts', {
       id: {
         primaryKey: true,
@@ -32,9 +31,23 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: false,
       },
+      communityId: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      likes: {
+        type: Sequelize.ARRAY(Sequelize.JSONB),
+        allowNull: true,
+        defaultValue: [],
+      },
+      comments: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: true,
+        defaultValue: [],
+      },
       flags: {
         type: Sequelize.ARRAY(Sequelize.JSONB),
-        allowNull: false,
+        allowNull: true,
         defaultValue: [],
       },
       createdAt: {
@@ -60,7 +73,7 @@ module.exports = {
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.removeConstraint('Posts', 'fk_posts_userId');
     await queryInterface.dropTable('Posts');
   }
