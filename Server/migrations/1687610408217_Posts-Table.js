@@ -16,7 +16,7 @@ module.exports = {
       },
       userId: {
         type: Sequelize.UUID, // Change the data type to Sequelize.UUID
-        allowNull: false,
+        allowNull: true, // Change to allowNull: true if necessary
         references: {
           model: 'Users',
           key: 'id',
@@ -31,6 +31,11 @@ module.exports = {
       images: {
         type: Sequelize.JSONB,
         allowNull: false,
+      },
+      flags: {
+        type: Sequelize.ARRAY(Sequelize.JSONB),
+        allowNull: false,
+        defaultValue: [],
       },
       createdAt: {
         type: Sequelize.DATE,

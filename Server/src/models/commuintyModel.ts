@@ -9,6 +9,7 @@ export interface CommunityAttributes {
   communityName: string;
   about: string;
   users: string[];
+  token: number;
 }
 
 class Community extends Model<CommunityAttributes> {
@@ -18,6 +19,7 @@ class Community extends Model<CommunityAttributes> {
   communityName!: string;
   about!: string;
   users!: string[];
+  token!: number; // Add the token attribute
   createdAt!: Date;
   updatedAt!: Date;
 }
@@ -31,7 +33,7 @@ Community.init(
       allowNull: false,
     },
     userId: {
-      type: DataTypes.UUID, // Update the data type to DataTypes.UUID
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: User,
@@ -54,6 +56,10 @@ Community.init(
     users: {
       type: DataTypes.ARRAY(DataTypes.UUID),
       defaultValue: [],
+    },
+    token: {
+      type: DataTypes.INTEGER, // Add the token attribute as INTEGER
+      allowNull: false,
     },
   },
   {

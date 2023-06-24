@@ -39,7 +39,7 @@ app.use('/',commentRouter);
 //database conection
 const syncDatabase = async () => {
   await dbConnect();
-  await sequelize.sync();
+  await sequelize.sync({ force: false });
   console.log('Connected to Database Successfully');
 };
 

@@ -3,8 +3,8 @@ import Post, { PostAttributes } from '../models/postModel';
 
 export const createPost = async (req: Request, res: Response) => {
   try {
-    const { title, userId, body, images, communityId, like }: PostAttributes = req.body;
-    const post = await Post.create({ title, userId, body, images, communityId,like });
+    const { title, userId, body, images, communityId, likes,flags, comments }: PostAttributes = req.body;
+    const post = await Post.create({ title, userId, body, images, communityId,likes,flags,comments });
     return res.status(201).json({ message: "Post created successfully", data: post });
   } catch (error) {
     return res.status(500).json({ message: 'Failed to create posts', data: error });

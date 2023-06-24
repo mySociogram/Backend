@@ -54,6 +54,7 @@ export const createCommunity = async (req: Request, res: Response) => {
       userId,
       walletId: user.walletId,
       users: [],
+      token:1000000000,
     };
     const community = await Community.create(communityData);
 

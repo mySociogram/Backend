@@ -8,6 +8,12 @@ export interface Like {
   commentId: string;
 }
 
+export interface Flag {
+  id: string;
+  userId: string;
+  colours: { red: number; yellow: number };
+}
+
 export interface PostAttributes {
   id?: string;
   title: string;
@@ -15,7 +21,9 @@ export interface PostAttributes {
   body: string;
   images: Array<{ caption: string; url: string }>;
   communityId: string;
-  like: Like[];
+  likes: Like[];
+  comments: string[];
+  flags: Flag[];
 }
 
 class Post extends Model<PostAttributes> {
@@ -24,9 +32,7 @@ class Post extends Model<PostAttributes> {
   userId!: string;
   body!: string;
   images!: Array<{ caption: string; url: string }>;
-  like!: Like[];
-
-  readonly user?: User; // Optional User instance associated with the post
+  likes!: Like[];
 }
 
 Post.init(
@@ -42,7 +48,7 @@ Post.init(
       allowNull: false,
     },
     userId: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: true,
     },
     body: {
@@ -57,8 +63,17 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-
-    like: {
+    likes: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
+      allowNull: false,
+      defaultValue: [],
+    },
+    comments: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false,
+      defaultValue: [],
+    },
+    flags: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
       allowNull: false,
       defaultValue: [],
@@ -71,6 +86,10 @@ Post.init(
   }
 );
 
-Post.belongsTo(User, { foreignKey: "userId" });
+Post.belongsTo(User, {
+  foreignKey: "userId",
+  onDelete: "SET NULL",
+  onUpdate: "CASCADE",
+});
 
 export default Post;

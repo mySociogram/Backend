@@ -2,53 +2,57 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('communities', {
+    await queryInterface.createTable('Communities', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false
+        allowNull: false,
       },
       userId: {
-        type: Sequelize.UUID, // Change the data type to Sequelize.UUID
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'id'
+          key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
       },
       walletId: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       communityName: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       about: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       users: {
         type: Sequelize.ARRAY(Sequelize.STRING),
-        allowNull: false
+        allowNull: false,
+      },
+      token: {
+        type: Sequelize.INTEGER, // Add the token column as INTEGER
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('communities');
-  }
+    await queryInterface.dropTable('Communities');
+  },
 };
