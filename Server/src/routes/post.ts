@@ -7,12 +7,13 @@ import {
     updatePost,
     deletePost,
 } from '../controller/postsController';
+import { auth } from '../middlewares/auth';
 
 // Create a new post
-router.post('/posts', createPost);
+router.post('/posts',auth, createPost);
 
 // Get all posts
-router.get('/posts', getAllPosts);
+router.get('/posts',auth, getAllPosts);
 
 // Get a single post by ID
 router.get('/posts/:id', getPostById);

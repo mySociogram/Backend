@@ -23,6 +23,12 @@ run yarn
 # development
 $ yarn install
 
+$ yarn compile
+
+$ yarn add  nodemon
+
+$ yarn dev
+
 ## Database 
  Create a PostgreSQL database for your project.
 
