@@ -1,4 +1,4 @@
-import express,{Response, Request } from'express';
+import express from 'express';
 const router = express.Router();
 import {
     createPost,
@@ -10,10 +10,10 @@ import {
 import { auth } from '../middlewares/auth';
 
 // Create a new post
-router.post('/posts',auth, createPost);
+router.post('/posts', createPost);
 
 // Get all posts
-router.get('/posts',auth, getAllPosts);
+router.get('/posts',getAllPosts);
 
 // Get a single post by ID
 router.get('/posts/:id', getPostById);

@@ -9,22 +9,19 @@ export const userSignUp = async (req: Request, res: Response) => {
   console.log(req.body);
   const { walletId } = req.body;
   try {
+    const token = jwt.sign({ walletId: walletId }, JWT_SECRET || "SECRET-KEY", {
+      expiresIn: "7d",
+    });
+
     const existingUser = await User.findOne({ where: { walletId } });
     if (existingUser) {
-      return res.status(409).json({ message: "Wallet address already exists" });
+      return res.status(200).json({ message: "Wallet connected successfully", token });
     }
 
     const id = uuidv4();
 
     const newUser = await User.create({ id, walletId });
 
-    const token = jwt.sign(
-      { id: newUser.id, walletId },
-      JWT_SECRET || "SECRET-KEY",
-      {
-        expiresIn: "7d",
-      }
-    );
     return res
       .status(201)
       .json({ message: "Wallet connected successfully", newUser, token });
