@@ -14,6 +14,7 @@ export interface Flag {
   colours: { red: number; yellow: number };
 }
 
+
 export interface PostAttributes {
   id?: string;
   title: string;

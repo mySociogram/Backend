@@ -1,4 +1,4 @@
-import express,{Response, Request } from'express';
+import express from 'express';
 const router = express.Router();
 import {
     createPost,
@@ -7,12 +7,13 @@ import {
     updatePost,
     deletePost,
 } from '../controller/postsController';
+import { auth } from '../middlewares/auth';
 
 // Create a new post
 router.post('/posts', createPost);
 
 // Get all posts
-router.get('/posts', getAllPosts);
+router.get('/posts',getAllPosts);
 
 // Get a single post by ID
 router.get('/posts/:id', getPostById);

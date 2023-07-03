@@ -1,5 +1,4 @@
 # Backend Set-up
-# Backend Setup
 
 This is a backend project built with Node.js, Sequelize, and Yarn.
 
@@ -21,7 +20,17 @@ run yarn
 
 ```bash
 # development
+$ cd Server
+
 $ yarn install
+
+$ yarn compile
+
+$ yarn add  nodemon
+
+$ yarn add pg
+
+$ yarn dev
 
 ## Database 
  Create a PostgreSQL database for your project.
